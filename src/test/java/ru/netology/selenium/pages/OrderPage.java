@@ -23,19 +23,14 @@ public class OrderPage {
     private SelenideElement phone = form.$("[name='phone']");
     private SelenideElement agreeCheckbox = form.$(".checkbox__box");
     private SelenideElement orderButton = form.$(withText("Запланировать"));
-    private Faker faker = new Faker(new Locale("ru"));
-    private String futureDate = "";
-    private UserData userData;
 
     public OrderPage() {
-        userData = new UserData(faker.name().fullName(), faker.phoneNumber().phoneNumber(), faker.address().city());
         form.shouldBe(visible);
     }
 
-    public void fillFormAndConfirm(int futureDays) {
+    public void fillFormAndConfirm(String futureDate, UserData userData) {
         city.setValue(userData.getCity());
         meetDate.doubleClick().sendKeys(Keys.BACK_SPACE);
-        futureDate = DateUtils.getFutureDateByDays(futureDays);
         meetDate.setValue(futureDate);
         name.setValue(userData.getName());
         phone.setValue(userData.getPhone());
@@ -43,9 +38,8 @@ public class OrderPage {
         orderButton.click();
     }
 
-    public void setNewDate(int futureDays) {
+    public void setNewDate(String futureDate) {
         meetDate.doubleClick().sendKeys(Keys.BACK_SPACE);
-        futureDate = DateUtils.getFutureDateByDays(futureDays);
         meetDate.setValue(futureDate);
     }
 
@@ -64,9 +58,4 @@ public class OrderPage {
     public SuccessReplainNotification successReplainNotification() {
         return new SuccessReplainNotification();
     }
-
-    public String getFutureDate() {
-        return futureDate;
-    }
-
 }
