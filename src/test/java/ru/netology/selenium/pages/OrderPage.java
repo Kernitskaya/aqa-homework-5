@@ -24,6 +24,8 @@ public class OrderPage {
     private SelenideElement agreeCheckbox = form.$(".checkbox__box");
     private SelenideElement orderButton = form.$(withText("Запланировать"));
 
+    private String titleText = "Успешно!";
+
     public OrderPage() {
         form.shouldBe(visible);
     }
@@ -38,9 +40,10 @@ public class OrderPage {
         orderButton.click();
     }
 
-    public void setNewDate(String futureDate) {
+    public OrderPage setNewDate(String futureDate) {
         meetDate.doubleClick().sendKeys(Keys.BACK_SPACE);
         meetDate.setValue(futureDate);
+        return this;
     }
 
     public void confirm() {
