@@ -1,5 +1,9 @@
 package ru.netology.selenium;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.netology.selenium.pages.OrderPage;
 import ru.netology.selenium.utils.DateUtils;
@@ -9,6 +13,16 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class OrderCardTest {
     private String startUrl = "http://localhost:9999";
+
+    @BeforeAll
+    public static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @AfterAll
+    public static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
 
     @Test
     void testValidOrder() {
